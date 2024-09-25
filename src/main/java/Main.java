@@ -1,9 +1,7 @@
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
     static List<Person> persons;
@@ -37,9 +35,12 @@ public class Main {
         persons.add(person);
     }
 
-//    public static void removePerson(Person person) {
-//        persons.remove(person);
-//    }
+    public static void removePersonByEmail(String email) {
+        Person person = getPersonByEmail(email);
+        if (person != null) {
+            persons.remove(person);
+        }
+    }
 
     public static void printPersons() {
         for (Person person : persons) {

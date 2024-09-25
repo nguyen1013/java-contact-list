@@ -1,6 +1,4 @@
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -101,23 +99,6 @@ public class Person {
         System.out.println("Enter address: ");
         String address = scanner.nextLine();
         return new Person(firstName, lastName, age, email, phoneNumber, address);
-    }
-
-    public void writePersonToFile(Person person, String fileName) throws IOException {
-        // Write person to file
-        File file = new File(fileName);
-        try {
-            FileWriter fileWriter = new FileWriter(file, true);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(person.getFirstName() + " " + person.getLastName() + "\n");
-            bufferedWriter.write(person.getAge() + "\n");
-            bufferedWriter.write(person.getEmail() + "\n");
-            bufferedWriter.write(person.getPhoneNumber() + "\n");
-            bufferedWriter.write(person.getAddress() + "\n");
-            bufferedWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public static void writePersonToJsonFile(Person person, File file) throws IOException {
