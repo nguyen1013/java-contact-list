@@ -3,8 +3,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Person {
+    private static int personCount = 0;
+    public int id;
     private String firstName;
     private String lastName;
     private int age;
@@ -13,6 +16,8 @@ public class Person {
     private String address;
 
     public Person(String firstName, String lastName, int age, String email, String phoneNumber, String address) {
+        personCount++;
+        this.id = personCount;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -76,7 +81,7 @@ public class Person {
     @Override
     public String toString() {
         String personToString = "";
-        personToString += "Full name: " + this.getFullName() + ", age: " + this.getAge() + ", email: " + this.getEmail() + ", Phone: " + this.getPhoneNumber() + ", Address: " + this.getAddress();
+        personToString += "Id: " + this.id +  ", Full name: " + this.getFullName() + ", age: " + this.getAge() + ", email: " + this.getEmail() + ", Phone: " + this.getPhoneNumber() + ", Address: " + this.getAddress();
         return personToString;
     }
 
@@ -115,9 +120,14 @@ public class Person {
         }
     }
 
-    public void writePersonToJsonFile(Person person, String fileName) throws IOException {
+    public static void writePersonToJsonFile(Person person, File file) throws IOException {
         // Write person to file
-
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writeValue(file, person);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

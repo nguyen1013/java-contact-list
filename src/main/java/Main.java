@@ -1,12 +1,13 @@
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     static List<Person> persons;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         persons = new ArrayList<Person>();
         Person person1 = new Person("Jack", "Sparow", 30, "jack@mail.fi", "0411234567", "Vaasa, Finland");
         Person person2 = new Person("David", "James", 28, "jame@mail.fi", "0421234568", "Turku, Finland" );
@@ -25,6 +26,10 @@ public class Main {
         }
 
         File file = new File("contact.json");
+
+        for (Person person : persons) {
+            Person.writePersonToJsonFile(person, file);
+        }
 
     }
 
