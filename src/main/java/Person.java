@@ -4,7 +4,7 @@ import java.util.Scanner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Person {
-    private static int personCount = 0;
+    private static int personCount = 1;
     public int id;
     private String firstName;
     private String lastName;
@@ -14,7 +14,6 @@ public class Person {
     private String address;
 
     public Person(String firstName, String lastName, int age, String email, String phoneNumber, String address) {
-        personCount++;
         this.id = personCount;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,6 +21,7 @@ public class Person {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        personCount++;
     }
 
     public String getFirstName() {
@@ -85,6 +85,7 @@ public class Person {
 
     public static Person getInputPerson() {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Input person details: " + "(Id: " + personCount + ")");
         System.out.println("Enter first name: ");
         String firstName = scanner.nextLine();
         System.out.println("Enter last name: ");
@@ -98,6 +99,7 @@ public class Person {
         String phoneNumber = scanner.nextLine();
         System.out.println("Enter address: ");
         String address = scanner.nextLine();
+        System.out.println("Person added successfully!");
         return new Person(firstName, lastName, age, email, phoneNumber, address);
     }
 
