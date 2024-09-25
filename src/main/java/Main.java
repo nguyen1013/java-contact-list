@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Main {
     static List<Person> persons;
+
     public static void main(String[] args) throws IOException {
         persons = new ArrayList<Person>();
         Person person1 = new Person("Jack", "Sparow", 30, "jack@mail.fi", "0411234567", "Vaasa, Finland");
@@ -23,10 +24,10 @@ public class Main {
             System.out.println("Person not found");
         }
 
-        File file = new File("contact.json");
+        File file = new File("contacts.json");
 
         for (Person person : persons) {
-            Person.writePersonToJsonFile(person, file);
+            Person.appendPersonToJsonFile(person, "contacts.json");
         }
 
     }
@@ -85,6 +86,4 @@ public class Main {
         }
         return null;
     }
-
-
 }

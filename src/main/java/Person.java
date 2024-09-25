@@ -1,7 +1,11 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Person {
     private static int personCount = 1;
@@ -103,16 +107,46 @@ public class Person {
         return new Person(firstName, lastName, age, email, phoneNumber, address);
     }
 
-    public static void writePersonToJsonFile(Person person, File file) throws IOException {
-        // Write person to file
-        ObjectMapper mapper = new ObjectMapper();
+    public static void appendPersonToJsonFile(Person newPerson, String filePath) {
+        ObjectMapper objectMapper = new ObjectMapper();
         try {
-            mapper.writeValue(file, person);
+            File file = new File(filePath);
+            JsonNode rootNode;
+
+            // Check if the file exists and is not empty
+            if (file.exists() && file.length() != 0) {
+                rootNode = objectMapper.readTree(file);
+            } else {
+                // Create a new root node if the file is empty or doesn't exist
+                rootNode = objectMapper.createObjectNode();
+                ((ObjectNode) rootNode).putArray("contacts");
+            }
+
+            // Get the contacts array from the JSON object
+            ArrayNode contactsArray = (ArrayNode) rootNode.path("contacts");
+
+            // Create a new Person node
+            ObjectNode personNode = objectMapper.createObjectNode();
+            personNode.put("id", newPerson.id);
+            personNode.put("firstName", newPerson.getFirstName());
+            personNode.put("lastName", newPerson.getLastName());
+            personNode.put("age", newPerson.getAge());
+            personNode.put("email", newPerson.getEmail());
+            personNode.put("phoneNumber", newPerson.getPhoneNumber());
+            personNode.put("address", newPerson.getAddress());
+
+            // Add the new person to the contacts array
+            contactsArray.add(personNode);
+
+            // Write the updated JSON back to the file
+            objectMapper.writeValue(file, rootNode);
+
+            System.out.println("New person added successfully!");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
 }
 
